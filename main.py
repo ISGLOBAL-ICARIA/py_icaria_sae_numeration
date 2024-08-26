@@ -13,12 +13,12 @@ __email__ = "andreu.bofill@isglobal.org"
 __status__ = "Dev"
 
 
-import tokens, sae
-
-import redcap
+import sae
+from datetime import datetime
 
 if __name__ == '__main__':
     sae.get_SAE_events()
+    print("\n[{}] FINISHED".format(datetime.now()))
 
     #sae.get_files()
 
