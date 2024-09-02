@@ -18,12 +18,12 @@ def get_SAE_events():
     for project_key in tokens.REDCAP_PROJECTS_ICARIA:
         print(project_key)
         project = redcap.Project(tokens.URL, tokens.REDCAP_PROJECTS_ICARIA[project_key])
-        df = project.export_records(format='df', fields=params.SAE_FIELDS,events=['adverse_events_arm_1'])
+        df = project.export_records(format_type='df', fields=params.SAE_FIELDS,events=['adverse_events_arm_1'])
         dfres = df.reset_index()[['record_id','redcap_repeat_instance','sae_number','sae_report_type',
                 'sae_onset','sae_date','sae_hosp_admin_date','sae_death_date',
                 'sae_hosp_disch_date','sae_complete','sae_interviewer_id']]
         dict_sn = {}
-        dfsn = project.export_records(format='df', fields=['study_number'], events=['epipenta1_v0_recru_arm_1'])
+        dfsn = project.export_records(format_type='df', fields=['study_number'], events=['epipenta1_v0_recru_arm_1'])
         dfsn = dfsn.reset_index().set_index('record_id')
 
         for k,el in dfsn.T.items():
@@ -127,7 +127,7 @@ def get_SAE_events():
                 'redcap_repeat_instrument': 'sae',
                 'redcap_repeat_instance': el['redcap_repeat_instance'],
                 'sae_number': el['new_number']})
-        print(to_import_list)
+#        print(to_import_list)
 
 
         if to_import_list != []:
@@ -141,14 +141,14 @@ def get_SAE_events():
             diff.append(True)
         else:
             diff.append(False)
+
     print(all_saes[diff])
 
+    print("POTENCIAL ERROR CASES")
     print(potential_errors_cases)
-    print(onsets)
 
     ghost_df.to_csv(tokens.errors_ghost)
     potential_errors_cases.to_csv(tokens.errors_potental)
-    onsets.to_csv(tokens.errors_onsets)
 
 def get_files():
     dfdeaths_all = pd.DataFrame()
@@ -158,14 +158,14 @@ def get_files():
     for project_key in tokens.REDCAP_PROJECTS_ICARIA:
         print(project_key)
         project = redcap.Project(tokens.URL, tokens.REDCAP_PROJECTS_ICARIA[project_key])
-        df = project.export_records(format='df', fields=params.SAE_FIELDS,events=['adverse_events_arm_1'])
+        df = project.export_records(format_type='df', fields=params.SAE_FIELDS,events=['adverse_events_arm_1'])
         dfres = df.reset_index()[['record_id','redcap_repeat_instance','sae_number','sae_report_type',
                 'sae_onset','sae_date','sae_hosp_admin_date','sae_death','sae_death_date', 'sae_outcome',
                 'sae_hosp_disch_date','sae_complete','sae_interviewer_id']]
-        dfsn = project.export_records(format='df', fields=['study_number'], events=['epipenta1_v0_recru_arm_1'])
+        dfsn = project.export_records(format_type='df', fields=['study_number'], events=['epipenta1_v0_recru_arm_1'])
         dfsn = dfsn.reset_index().set_index('record_id')
 
-        dfdeaths = project.export_records(format='df', fields=[
+        dfdeaths = project.export_records(format_type='df', fields=[
             'death_reported_date','death_place','death_date',
             'death_interviewer_id'], events=['end_of_fu_arm_1'])
         print(dfdeaths)
