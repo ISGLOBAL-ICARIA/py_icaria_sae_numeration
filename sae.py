@@ -146,7 +146,7 @@ def get_SAE_events():
 
     print("POTENCIAL ERROR CASES")
     print(potential_errors_cases)
-
+    # Script
     ghost_df.to_csv(tokens.errors_ghost)
     potential_errors_cases.to_csv(tokens.errors_potental)
 
