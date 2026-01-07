@@ -4,5 +4,4 @@ SAE_FIELDS = [
     'sae_death_date','sae_hosp_disch_date','sae_complete','sae_interviewer_id',
 ]
 
-
 blocked_records = ['16021333','16021833','11010248','11010859','3010320']
